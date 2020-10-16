@@ -1,0 +1,2904 @@
+input AddBundleProductsToCartInput {
+  cart_id: String!
+  cart_items: [BundleProductCartItemInput]!
+}
+
+type AddBundleProductsToCartOutput {
+  cart: Cart!
+}
+
+input AddConfigurableProductsToCartInput {
+  cart_id: String!
+  cart_items: [ConfigurableProductCartItemInput]!
+}
+
+type AddConfigurableProductsToCartOutput {
+  cart: Cart!
+}
+
+input AddDownloadableProductsToCartInput {
+  cart_id: String!
+  cart_items: [DownloadableProductCartItemInput]!
+}
+
+type AddDownloadableProductsToCartOutput {
+  cart: Cart!
+}
+
+input AddSimpleProductsToCartInput {
+  cart_id: String!
+  cart_items: [SimpleProductCartItemInput]!
+}
+
+type AddSimpleProductsToCartOutput {
+  cart: Cart!
+}
+
+input AddVirtualProductsToCartInput {
+  cart_id: String!
+  cart_items: [VirtualProductCartItemInput]!
+}
+
+type AddVirtualProductsToCartOutput {
+  cart: Cart!
+}
+
+type Aggregation {
+  attribute_code: String!
+  count: Int
+  label: String
+  options: [AggregationOption]
+}
+
+type AggregationOption implements AggregationOptionInterface {
+  count: Int
+  label: String
+  value: String!
+}
+
+interface AggregationOptionInterface {
+  count: Int
+  label: String
+  value: String!
+}
+
+type AppliedCoupon {
+  code: String!
+}
+
+input ApplyCouponToCartInput {
+  cart_id: String!
+  coupon_code: String!
+}
+
+type ApplyCouponToCartOutput {
+  cart: Cart!
+}
+
+type Attribute {
+  attribute_code: String
+  attribute_options: [AttributeOption]
+  attribute_type: String
+  entity_type: String
+  input_type: String
+}
+
+input AttributeInput {
+  attribute_code: String
+  entity_type: String
+}
+
+type AttributeOption {
+  label: String
+  value: String
+}
+
+input AuthorizenetInput {
+  cc_last_4: Int!
+  opaque_data_descriptor: String!
+  opaque_data_value: String!
+}
+
+type AvailablePaymentMethod {
+  code: String!
+  title: String!
+}
+
+type AvailableShippingMethod {
+  amount: Money!
+  available: Boolean!
+  base_amount: Money
+  @deprecated(reason: "The field should not be used on the storefront")
+  carrier_code: String!
+  carrier_title: String!
+  error_message: String
+  method_code: String
+  method_title: String
+  price_excl_tax: Money!
+  price_incl_tax: Money!
+}
+
+input BillingAddressInput {
+  address: CartAddressInput
+  customer_address_id: Int
+  same_as_shipping: Boolean
+  use_for_shipping: Boolean
+}
+
+type BillingCartAddress implements CartAddressInterface {
+  city: String!
+  company: String
+  country: CartAddressCountry!
+  customer_notes: String
+  @deprecated(reason: "The field is used only in shipping address")
+  firstname: String!
+  lastname: String!
+  postcode: String
+  region: CartAddressRegion
+  street: [String]!
+  telephone: String!
+}
+
+input BraintreeCcVaultInput {
+  device_data: String
+  public_hash: String!
+}
+
+input BraintreeInput {
+  device_data: String
+  is_active_payment_token_enabler: Boolean!
+  payment_method_nonce: String!
+}
+
+type Breadcrumb {
+  category_id: Int
+  category_level: Int
+  category_name: String
+  category_url_key: String
+  category_url_path: String
+}
+
+type BundleCartItem implements CartItemInterface {
+  bundle_options: [SelectedBundleOption]!
+  customizable_options: [SelectedCustomizableOption]!
+  id: String!
+  prices: CartItemPrices
+  product: ProductInterface!
+  quantity: Float!
+}
+
+type BundleItem {
+  option_id: Int
+  options: [BundleItemOption]
+  position: Int
+  required: Boolean
+  sku: String
+  title: String
+  type: String
+}
+
+type BundleItemOption {
+  can_change_quantity: Boolean
+  id: Int
+  is_default: Boolean
+  label: String
+  position: Int
+  price: Float
+  price_type: PriceTypeEnum
+  product: ProductInterface
+  qty: Float
+  @deprecated(reason: "The `qty` is deprecated. Use `quantity` instead.")
+  quantity: Float
+}
+
+input BundleOptionInput {
+  id: Int!
+  quantity: Float!
+  value: [String]!
+}
+
+type BundleProduct implements ProductInterface & PhysicalProductInterface & CustomizableProductInterface {
+activity: String
+attribute_set_id: Int
+canonical_url: String
+categories: [CategoryInterface]
+category_gear: String
+climate: String
+collar: String
+color: Int
+country_of_manufacture: String
+created_at: String
+crosssell_products: [ProductInterface]
+description: ComplexTextValue
+dynamic_price: Boolean
+dynamic_sku: Boolean
+dynamic_weight: Boolean
+eco_collection: Int
+erin_recommends: Int
+features_bags: String
+format: Int
+gender: String
+gift_message_available: String
+id: Int
+image: ProductImage
+items: [BundleItem]
+manufacturer: Int
+material: String
+media_gallery: [MediaGalleryInterface]
+media_gallery_entries: [MediaGalleryEntry]
+@deprecated(reason: "Use product's `media_gallery` instead")
+meta_description: String
+meta_keyword: String
+meta_title: String
+name: String
+new: Int
+new_from_date: String
+new_to_date: String
+only_x_left_in_stock: Float
+options: [CustomizableOptionInterface]
+options_container: String
+pattern: String
+performance_fabric: Int
+price: ProductPrices
+@deprecated(reason: "Use price_range for product price information.")
+price_range: PriceRange!
+price_tiers: [TierPrice]
+price_view: PriceViewEnum
+product_links: [ProductLinksInterface]
+related_products: [ProductInterface]
+sale: Int
+ship_bundle_items: ShipBundleItemsEnum
+short_description: ComplexTextValue
+size: Int
+sku: String
+sleeve: String
+small_image: ProductImage
+special_from_date: String
+special_price: Float
+special_to_date: String
+stock_status: ProductStockStatus
+strap_bags: String
+style_bags: String
+style_bottom: String
+style_general: String
+swatch_image: String
+thumbnail: ProductImage
+tier_price: Float
+@deprecated(reason: "Use price_tiers for product tier price information.")
+tier_prices: [ProductTierPrices]
+@deprecated(reason: "Use price_tiers for product tier price information.")
+type_id: String @deprecated(reason: "Use __typename instead.")
+updated_at: String
+upsell_products: [ProductInterface]
+url_key: String
+url_path: String
+@deprecated(reason: "Use product's `canonical_url` or url rewrites instead")
+url_rewrites: [UrlRewrite]
+url_suffix: String
+websites: [Website]
+@deprecated(reason: "The field should not be used on the storefront.")
+weight: Float
+}
+
+input BundleProductCartItemInput {
+bundle_options: [BundleOptionInput]!
+customizable_options: [CustomizableOptionInput]
+data: CartItemInput!
+}
+
+type Cart {
+applied_coupon: AppliedCoupon
+@deprecated(reason: "Use applied_coupons instead ")
+applied_coupons: [AppliedCoupon]
+available_payment_methods: [AvailablePaymentMethod]
+billing_address: BillingCartAddress
+email: String
+id: ID!
+is_virtual: Boolean!
+items: [CartItemInterface]
+prices: CartPrices
+selected_payment_method: SelectedPaymentMethod
+shipping_addresses: [ShippingCartAddress]!
+total_quantity: Float!
+}
+
+type CartAddressCountry {
+code: String!
+label: String!
+}
+
+input CartAddressInput {
+city: String!
+company: String
+country_code: String!
+firstname: String!
+lastname: String!
+postcode: String
+region: String
+save_in_address_book: Boolean
+street: [String]!
+telephone: String!
+}
+
+interface CartAddressInterface {
+city: String!
+company: String
+country: CartAddressCountry!
+firstname: String!
+lastname: String!
+postcode: String
+region: CartAddressRegion
+street: [String]!
+telephone: String!
+}
+
+type CartAddressRegion {
+code: String!
+label: String!
+}
+
+type CartDiscount {
+amount: Money!
+label: [String]!
+}
+
+input CartItemInput {
+quantity: Float!
+sku: String!
+}
+
+interface CartItemInterface {
+id: String!
+prices: CartItemPrices
+product: ProductInterface!
+quantity: Float!
+}
+
+type CartItemPrices {
+discounts: [Discount]
+price: Money!
+row_total: Money!
+row_total_including_tax: Money!
+total_item_discount: Money
+}
+
+type CartItemQuantity {
+cart_item_id: Int!
+@deprecated(
+reason: "`cart_items` field of `ShippingCartAddress` returns now `CartItemInterface` instead of `CartItemQuantity`"
+)
+quantity: Float!
+@deprecated(
+reason: "`cart_items` field of `ShippingCartAddress` returns now `CartItemInterface` instead of `CartItemQuantity`"
+)
+}
+
+type CartItemSelectedOptionValuePrice {
+type: PriceTypeEnum!
+units: String!
+value: Float!
+}
+
+input CartItemUpdateInput {
+cart_item_id: Int!
+customizable_options: [CustomizableOptionInput]
+quantity: Float
+}
+
+type CartPrices {
+applied_taxes: [CartTaxItem]
+discount: CartDiscount @deprecated(reason: "Use discounts instead ")
+discounts: [Discount]
+grand_total: Money
+subtotal_excluding_tax: Money
+subtotal_including_tax: Money
+subtotal_with_discount_excluding_tax: Money
+}
+
+type CartTaxItem {
+amount: Money!
+label: String!
+}
+
+input CategoryFilterInput {
+ids: FilterEqualTypeInput
+name: FilterMatchTypeInput
+url_key: FilterEqualTypeInput
+}
+
+interface CategoryInterface {
+available_sort_by: [String]
+breadcrumbs: [Breadcrumb]
+canonical_url: String
+children_count: String
+cms_block: CmsBlock
+created_at: String
+custom_layout_update_file: String
+default_sort_by: String
+description: String
+display_mode: String
+filter_price_range: Float
+id: Int
+image: String
+include_in_menu: Int
+is_anchor: Int
+landing_page: Int
+level: Int
+meta_description: String
+meta_keywords: String
+meta_title: String
+name: String
+path: String
+path_in_store: String
+position: Int
+product_count: Int
+products(
+pageSize: Int = 20
+currentPage: Int = 1
+sort: ProductAttributeSortInput
+): CategoryProducts
+updated_at: String
+url_key: String
+url_path: String
+url_suffix: String
+}
+
+type CategoryProducts {
+items: [ProductInterface]
+page_info: SearchResultPageInfo
+total_count: Int
+}
+
+type CategoryTree implements CategoryInterface {
+available_sort_by: [String]
+breadcrumbs: [Breadcrumb]
+canonical_url: String
+children: [CategoryTree]
+children_count: String
+cms_block: CmsBlock
+created_at: String
+custom_layout_update_file: String
+default_sort_by: String
+description: String
+display_mode: String
+filter_price_range: Float
+id: Int
+image: String
+include_in_menu: Int
+is_anchor: Int
+landing_page: Int
+level: Int
+meta_description: String
+meta_keywords: String
+meta_title: String
+name: String
+path: String
+path_in_store: String
+position: Int
+product_count: Int
+products(
+pageSize: Int = 20
+currentPage: Int = 1
+sort: ProductAttributeSortInput
+): CategoryProducts
+updated_at: String
+url_key: String
+url_path: String
+url_suffix: String
+}
+
+type CheckoutAgreement {
+agreement_id: Int!
+checkbox_text: String!
+content: String!
+content_height: String
+is_html: Boolean!
+mode: CheckoutAgreementMode!
+name: String!
+}
+
+enum CheckoutAgreementMode {
+AUTO
+MANUAL
+}
+
+type CmsBlock {
+content: String
+identifier: String
+title: String
+}
+
+type CmsBlocks {
+items: [CmsBlock]
+}
+
+type CmsPage {
+content: String
+content_heading: String
+identifier: String
+meta_description: String
+meta_keywords: String
+meta_title: String
+page_layout: String
+title: String
+url_key: String
+}
+
+type ComplexTextValue {
+html: String!
+}
+
+type ConfigurableAttributeOption {
+code: String
+label: String
+value_index: Int
+}
+
+type ConfigurableCartItem implements CartItemInterface {
+configurable_options: [SelectedConfigurableOption]!
+customizable_options: [SelectedCustomizableOption]!
+id: String!
+prices: CartItemPrices
+product: ProductInterface!
+quantity: Float!
+}
+
+type ConfigurableProduct implements ProductInterface & PhysicalProductInterface & CustomizableProductInterface {
+activity: String
+attribute_set_id: Int
+canonical_url: String
+categories: [CategoryInterface]
+category_gear: String
+climate: String
+collar: String
+color: Int
+configurable_options: [ConfigurableProductOptions]
+country_of_manufacture: String
+created_at: String
+crosssell_products: [ProductInterface]
+description: ComplexTextValue
+eco_collection: Int
+erin_recommends: Int
+features_bags: String
+format: Int
+gender: String
+gift_message_available: String
+id: Int
+image: ProductImage
+manufacturer: Int
+material: String
+media_gallery: [MediaGalleryInterface]
+media_gallery_entries: [MediaGalleryEntry]
+@deprecated(reason: "Use product's `media_gallery` instead")
+meta_description: String
+meta_keyword: String
+meta_title: String
+name: String
+new: Int
+new_from_date: String
+new_to_date: String
+only_x_left_in_stock: Float
+options: [CustomizableOptionInterface]
+options_container: String
+pattern: String
+performance_fabric: Int
+price: ProductPrices
+@deprecated(reason: "Use price_range for product price information.")
+price_range: PriceRange!
+price_tiers: [TierPrice]
+product_links: [ProductLinksInterface]
+related_products: [ProductInterface]
+sale: Int
+short_description: ComplexTextValue
+size: Int
+sku: String
+sleeve: String
+small_image: ProductImage
+special_from_date: String
+special_price: Float
+special_to_date: String
+stock_status: ProductStockStatus
+strap_bags: String
+style_bags: String
+style_bottom: String
+style_general: String
+swatch_image: String
+thumbnail: ProductImage
+tier_price: Float
+@deprecated(reason: "Use price_tiers for product tier price information.")
+tier_prices: [ProductTierPrices]
+@deprecated(reason: "Use price_tiers for product tier price information.")
+type_id: String @deprecated(reason: "Use __typename instead.")
+updated_at: String
+upsell_products: [ProductInterface]
+url_key: String
+url_path: String
+@deprecated(reason: "Use product's `canonical_url` or url rewrites instead")
+url_rewrites: [UrlRewrite]
+url_suffix: String
+variants: [ConfigurableVariant]
+websites: [Website]
+@deprecated(reason: "The field should not be used on the storefront.")
+weight: Float
+}
+
+input ConfigurableProductCartItemInput {
+customizable_options: [CustomizableOptionInput]
+data: CartItemInput!
+parent_sku: String
+variant_sku: String
+}
+
+type ConfigurableProductOptions {
+attribute_code: String
+attribute_id: String
+id: Int
+label: String
+position: Int
+product_id: Int
+use_default: Boolean
+values: [ConfigurableProductOptionsValues]
+}
+
+type ConfigurableProductOptionsValues {
+default_label: String
+label: String
+store_label: String
+use_default_value: Boolean
+value_index: Int
+}
+
+type ConfigurableVariant {
+attributes: [ConfigurableAttributeOption]
+product: SimpleProduct
+}
+
+type Country {
+available_regions: [Region]
+full_name_english: String
+full_name_locale: String
+id: String
+three_letter_abbreviation: String
+two_letter_abbreviation: String
+}
+
+enum CountryCodeEnum {
+AF
+AX
+AL
+DZ
+AS
+AD
+AO
+AI
+AQ
+AG
+AR
+AM
+AW
+AU
+AT
+AZ
+BS
+BH
+BD
+BB
+BY
+BE
+BZ
+BJ
+BM
+BT
+BO
+BA
+BW
+BV
+BR
+IO
+VG
+BN
+BG
+BF
+BI
+KH
+CM
+CA
+CV
+KY
+CF
+TD
+CL
+CN
+CX
+CC
+CO
+KM
+CG
+CD
+CK
+CR
+CI
+HR
+CU
+CY
+CZ
+DK
+DJ
+DM
+DO
+EC
+EG
+SV
+GQ
+ER
+EE
+ET
+FK
+FO
+FJ
+FI
+FR
+GF
+PF
+TF
+GA
+GM
+GE
+DE
+GH
+GI
+GR
+GL
+GD
+GP
+GU
+GT
+GG
+GN
+GW
+GY
+HT
+HM
+HN
+HK
+HU
+IS
+IN
+ID
+IR
+IQ
+IE
+IM
+IL
+IT
+JM
+JP
+JE
+JO
+KZ
+KE
+KI
+KW
+KG
+LA
+LV
+LB
+LS
+LR
+LY
+LI
+LT
+LU
+MO
+MK
+MG
+MW
+MY
+MV
+ML
+MT
+MH
+MQ
+MR
+MU
+YT
+MX
+FM
+MD
+MC
+MN
+ME
+MS
+MA
+MZ
+MM
+NA
+NR
+NP
+NL
+AN
+NC
+NZ
+NI
+NE
+NG
+NU
+NF
+MP
+KP
+NO
+OM
+PK
+PW
+PS
+PA
+PG
+PY
+PE
+PH
+PN
+PL
+PT
+QA
+RE
+RO
+RU
+RW
+WS
+SM
+ST
+SA
+SN
+RS
+SC
+SL
+SG
+SK
+SI
+SB
+SO
+ZA
+GS
+KR
+ES
+LK
+BL
+SH
+KN
+LC
+MF
+PM
+VC
+SD
+SR
+SJ
+SZ
+SE
+CH
+SY
+TW
+TJ
+TZ
+TH
+TL
+TG
+TK
+TO
+TT
+TN
+TR
+TM
+TC
+TV
+UG
+UA
+AE
+GB
+US
+UY
+UM
+VI
+UZ
+VU
+VA
+VE
+VN
+WF
+EH
+YE
+ZM
+ZW
+}
+
+input createEmptyCartInput {
+cart_id: String
+}
+
+type CreatePayflowProTokenOutput {
+response_message: String!
+result: Int!
+result_code: Int!
+secure_token: String!
+secure_token_id: String!
+}
+
+input CreditCardDetailsInput {
+cc_exp_month: Int!
+cc_exp_year: Int!
+cc_last_4: Int!
+cc_type: String!
+}
+
+type Currency {
+available_currency_codes: [String]
+base_currency_code: String
+base_currency_symbol: String
+default_display_currecy_code: String
+@deprecated(
+reason: "Symbol was missed. Use `default_display_currency_code`."
+)
+default_display_currecy_symbol: String
+@deprecated(
+reason: "Symbol was missed. Use `default_display_currency_symbol`."
+)
+default_display_currency_code: String
+default_display_currency_symbol: String
+exchange_rates: [ExchangeRate]
+}
+
+enum CurrencyEnum {
+AFN
+ALL
+AZN
+DZD
+AOA
+ARS
+AMD
+AWG
+AUD
+BSD
+BHD
+BDT
+BBD
+BYR
+BZD
+BMD
+BTN
+BOB
+BAM
+BWP
+BRL
+GBP
+BND
+BGN
+BUK
+BIF
+KHR
+CAD
+CVE
+CZK
+KYD
+GQE
+CLP
+CNY
+COP
+KMF
+CDF
+CRC
+HRK
+CUP
+DKK
+DJF
+DOP
+XCD
+EGP
+SVC
+ERN
+EEK
+ETB
+EUR
+FKP
+FJD
+GMD
+GEK
+GEL
+GHS
+GIP
+GTQ
+GNF
+GYD
+HTG
+HNL
+HKD
+HUF
+ISK
+INR
+IDR
+IRR
+IQD
+ILS
+JMD
+JPY
+JOD
+KZT
+KES
+KWD
+KGS
+LAK
+LVL
+LBP
+LSL
+LRD
+LYD
+LTL
+MOP
+MKD
+MGA
+MWK
+MYR
+MVR
+LSM
+MRO
+MUR
+MXN
+MDL
+MNT
+MAD
+MZN
+MMK
+NAD
+NPR
+ANG
+YTL
+NZD
+NIC
+NGN
+KPW
+NOK
+OMR
+PKR
+PAB
+PGK
+PYG
+PEN
+PHP
+PLN
+QAR
+RHD
+RON
+RUB
+RWF
+SHP
+STD
+SAR
+RSD
+SCR
+SLL
+SGD
+SKK
+SBD
+SOS
+ZAR
+KRW
+LKR
+SDG
+SRD
+SZL
+SEK
+CHF
+SYP
+TWD
+TJS
+TZS
+THB
+TOP
+TTD
+TND
+TMM
+USD
+UGX
+UAH
+AED
+UYU
+UZS
+VUV
+VEB
+VEF
+VND
+CHE
+CHW
+XOF
+WST
+YER
+ZMK
+ZWD
+TRY
+AZM
+ROL
+TRL
+XPF
+}
+
+type CustomAttributeMetadata {
+items: [Attribute]
+}
+
+type Customer {
+addresses: [CustomerAddress]
+created_at: String
+date_of_birth: String
+default_billing: String
+default_shipping: String
+dob: String @deprecated(reason: "Use `date_of_birth` instead")
+email: String
+firstname: String
+gender: Int
+group_id: Int
+@deprecated(
+reason: "Customer group should not be exposed in the storefront scenarios"
+)
+id: Int
+@deprecated(
+reason: "id is not needed as part of Customer because on server side it can be identified based on customer token used for authentication. There is no need to know customer ID on the client side."
+)
+is_subscribed: Boolean
+lastname: String
+middlename: String
+prefix: String
+suffix: String
+taxvat: String
+wishlist: Wishlist!
+}
+
+type CustomerAddress {
+city: String
+company: String
+country_code: CountryCodeEnum
+country_id: String @deprecated(reason: "Use `country_code` instead.")
+custom_attributes: [CustomerAddressAttribute]
+@deprecated(reason: "Custom attributes should not be put into container")
+customer_id: Int
+@deprecated(
+reason: "customer_id is not needed as part of CustomerAddress, address ID (id) is unique identifier for the addresses."
+)
+default_billing: Boolean
+default_shipping: Boolean
+extension_attributes: [CustomerAddressAttribute]
+fax: String
+firstname: String
+id: Int
+lastname: String
+middlename: String
+postcode: String
+prefix: String
+region: CustomerAddressRegion
+region_id: Int
+@deprecated(
+reason: "Region ID is excessive on storefront and region code should suffice for all scenarios"
+)
+street: [String]
+suffix: String
+telephone: String
+vat_id: String
+}
+
+type CustomerAddressAttribute {
+attribute_code: String
+value: String
+}
+
+input CustomerAddressAttributeInput {
+attribute_code: String!
+value: String!
+}
+
+input CustomerAddressInput {
+city: String
+company: String
+country_code: CountryCodeEnum
+country_id: CountryCodeEnum
+custom_attributes: [CustomerAddressAttributeInput]
+default_billing: Boolean
+default_shipping: Boolean
+fax: String
+firstname: String
+lastname: String
+middlename: String
+postcode: String
+prefix: String
+region: CustomerAddressRegionInput
+street: [String]
+suffix: String
+telephone: String
+vat_id: String
+}
+
+type CustomerAddressRegion {
+region: String
+region_code: String
+region_id: Int
+@deprecated(
+reason: "Region ID is excessive on storefront and region code should suffice for all scenarios"
+)
+}
+
+input CustomerAddressRegionInput {
+region: String
+region_code: String
+region_id: Int
+}
+
+type CustomerDownloadableProduct {
+date: String
+download_url: String
+order_increment_id: String
+remaining_downloads: String
+status: String
+}
+
+type CustomerDownloadableProducts {
+items: [CustomerDownloadableProduct]
+}
+
+input CustomerInput {
+date_of_birth: String
+dob: String
+email: String
+firstname: String
+gender: Int
+is_subscribed: Boolean
+lastname: String
+middlename: String
+password: String
+prefix: String
+suffix: String
+taxvat: String
+}
+
+type CustomerOrder {
+created_at: String
+grand_total: Float
+id: Int
+increment_id: String @deprecated(reason: "Use the order_number instead.")
+order_number: String!
+status: String
+}
+
+type CustomerOrders {
+items: [CustomerOrder]
+}
+
+type CustomerOutput {
+customer: Customer!
+}
+
+type CustomerPaymentTokens {
+items: [PaymentToken]!
+}
+
+type CustomerToken {
+token: String
+}
+
+type CustomizableAreaOption implements CustomizableOptionInterface {
+option_id: Int
+product_sku: String
+required: Boolean
+sort_order: Int
+title: String
+value: CustomizableAreaValue
+}
+
+type CustomizableAreaValue {
+max_characters: Int
+price: Float
+price_type: PriceTypeEnum
+sku: String
+}
+
+type CustomizableCheckboxOption implements CustomizableOptionInterface {
+option_id: Int
+required: Boolean
+sort_order: Int
+title: String
+value: [CustomizableCheckboxValue]
+}
+
+type CustomizableCheckboxValue {
+option_type_id: Int
+price: Float
+price_type: PriceTypeEnum
+sku: String
+sort_order: Int
+title: String
+}
+
+type CustomizableDateOption implements CustomizableOptionInterface {
+option_id: Int
+product_sku: String
+required: Boolean
+sort_order: Int
+title: String
+value: CustomizableDateValue
+}
+
+type CustomizableDateValue {
+price: Float
+price_type: PriceTypeEnum
+sku: String
+}
+
+type CustomizableDropDownOption implements CustomizableOptionInterface {
+option_id: Int
+required: Boolean
+sort_order: Int
+title: String
+value: [CustomizableDropDownValue]
+}
+
+type CustomizableDropDownValue {
+option_type_id: Int
+price: Float
+price_type: PriceTypeEnum
+sku: String
+sort_order: Int
+title: String
+}
+
+type CustomizableFieldOption implements CustomizableOptionInterface {
+option_id: Int
+product_sku: String
+required: Boolean
+sort_order: Int
+title: String
+value: CustomizableFieldValue
+}
+
+type CustomizableFieldValue {
+max_characters: Int
+price: Float
+price_type: PriceTypeEnum
+sku: String
+}
+
+type CustomizableFileOption implements CustomizableOptionInterface {
+option_id: Int
+product_sku: String
+required: Boolean
+sort_order: Int
+title: String
+value: CustomizableFileValue
+}
+
+type CustomizableFileValue {
+file_extension: String
+image_size_x: Int
+image_size_y: Int
+price: Float
+price_type: PriceTypeEnum
+sku: String
+}
+
+type CustomizableMultipleOption implements CustomizableOptionInterface {
+option_id: Int
+required: Boolean
+sort_order: Int
+title: String
+value: [CustomizableMultipleValue]
+}
+
+type CustomizableMultipleValue {
+option_type_id: Int
+price: Float
+price_type: PriceTypeEnum
+sku: String
+sort_order: Int
+title: String
+}
+
+input CustomizableOptionInput {
+id: Int!
+value_string: String!
+}
+
+interface CustomizableOptionInterface {
+option_id: Int
+required: Boolean
+sort_order: Int
+title: String
+}
+
+interface CustomizableProductInterface {
+options: [CustomizableOptionInterface]
+}
+
+type CustomizableRadioOption implements CustomizableOptionInterface {
+option_id: Int
+required: Boolean
+sort_order: Int
+title: String
+value: [CustomizableRadioValue]
+}
+
+type CustomizableRadioValue {
+option_type_id: Int
+price: Float
+price_type: PriceTypeEnum
+sku: String
+sort_order: Int
+title: String
+}
+
+type DeletePaymentTokenOutput {
+customerPaymentTokens: CustomerPaymentTokens
+result: Boolean!
+}
+
+type Discount {
+amount: Money!
+label: String!
+}
+
+type DownloadableCartItem implements CartItemInterface {
+customizable_options: [SelectedCustomizableOption]
+id: String!
+links: [DownloadableProductLinks]
+prices: CartItemPrices
+product: ProductInterface!
+quantity: Float!
+samples: [DownloadableProductSamples]
+}
+
+enum DownloadableFileTypeEnum {
+FILE @deprecated(reason: "`sample_url` serves to get the downloadable sample")
+URL @deprecated(reason: "`sample_url` serves to get the downloadable sample")
+}
+
+type DownloadableProduct implements ProductInterface & CustomizableProductInterface {
+activity: String
+attribute_set_id: Int
+canonical_url: String
+categories: [CategoryInterface]
+category_gear: String
+climate: String
+collar: String
+color: Int
+country_of_manufacture: String
+created_at: String
+crosssell_products: [ProductInterface]
+description: ComplexTextValue
+downloadable_product_links: [DownloadableProductLinks]
+downloadable_product_samples: [DownloadableProductSamples]
+eco_collection: Int
+erin_recommends: Int
+features_bags: String
+format: Int
+gender: String
+gift_message_available: String
+id: Int
+image: ProductImage
+links_purchased_separately: Int
+links_title: String
+manufacturer: Int
+material: String
+media_gallery: [MediaGalleryInterface]
+media_gallery_entries: [MediaGalleryEntry]
+@deprecated(reason: "Use product's `media_gallery` instead")
+meta_description: String
+meta_keyword: String
+meta_title: String
+name: String
+new: Int
+new_from_date: String
+new_to_date: String
+only_x_left_in_stock: Float
+options: [CustomizableOptionInterface]
+options_container: String
+pattern: String
+performance_fabric: Int
+price: ProductPrices
+@deprecated(reason: "Use price_range for product price information.")
+price_range: PriceRange!
+price_tiers: [TierPrice]
+product_links: [ProductLinksInterface]
+related_products: [ProductInterface]
+sale: Int
+short_description: ComplexTextValue
+size: Int
+sku: String
+sleeve: String
+small_image: ProductImage
+special_from_date: String
+special_price: Float
+special_to_date: String
+stock_status: ProductStockStatus
+strap_bags: String
+style_bags: String
+style_bottom: String
+style_general: String
+swatch_image: String
+thumbnail: ProductImage
+tier_price: Float
+@deprecated(reason: "Use price_tiers for product tier price information.")
+tier_prices: [ProductTierPrices]
+@deprecated(reason: "Use price_tiers for product tier price information.")
+type_id: String @deprecated(reason: "Use __typename instead.")
+updated_at: String
+upsell_products: [ProductInterface]
+url_key: String
+url_path: String
+@deprecated(reason: "Use product's `canonical_url` or url rewrites instead")
+url_rewrites: [UrlRewrite]
+url_suffix: String
+websites: [Website]
+@deprecated(reason: "The field should not be used on the storefront.")
+}
+
+input DownloadableProductCartItemInput {
+customizable_options: [CustomizableOptionInput]
+data: CartItemInput!
+downloadable_product_links: [DownloadableProductLinksInput]
+}
+
+type DownloadableProductLinks {
+id: Int
+@deprecated(reason: "This information should not be exposed on frontend")
+is_shareable: Boolean
+@deprecated(reason: "This information should not be exposed on frontend")
+link_type: DownloadableFileTypeEnum
+@deprecated(reason: "`sample_url` serves to get the downloadable sample")
+number_of_downloads: Int
+@deprecated(reason: "This information should not be exposed on frontend")
+price: Float
+sample_file: String
+@deprecated(reason: "`sample_url` serves to get the downloadable sample")
+sample_type: DownloadableFileTypeEnum
+@deprecated(reason: "`sample_url` serves to get the downloadable sample")
+sample_url: String
+sort_order: Int
+title: String
+}
+
+input DownloadableProductLinksInput {
+link_id: Int!
+}
+
+type DownloadableProductSamples {
+id: Int
+@deprecated(reason: "This information should not be exposed on frontend")
+sample_file: String
+@deprecated(reason: "`sample_url` serves to get the downloadable sample")
+sample_type: DownloadableFileTypeEnum
+@deprecated(reason: "`sample_url` serves to get the downloadable sample")
+sample_url: String
+sort_order: Int
+title: String
+}
+
+type EntityUrl {
+canonical_url: String
+@deprecated(
+reason: "The canonical_url field is deprecated, use relative_url instead."
+)
+id: Int
+redirectCode: Int
+relative_url: String
+type: UrlRewriteEntityTypeEnum
+}
+
+type ExchangeRate {
+currency_to: String
+rate: Float
+}
+
+input FilterEqualTypeInput {
+eq: String
+in: [String]
+}
+
+input FilterMatchTypeInput {
+match: String
+}
+
+input FilterRangeTypeInput {
+from: String
+to: String
+}
+
+input FilterTypeInput {
+eq: String
+finset: [String]
+from: String
+gt: String
+gteq: String
+in: [String]
+like: String
+lt: String
+lteq: String
+moreq: String
+neq: String
+nin: [String]
+notnull: String
+is_null: String
+to: String
+}
+
+type FixedProductTax {
+amount: Money
+label: String
+}
+
+enum FixedProductTaxDisplaySettings {
+INCLUDE_FPT_WITHOUT_DETAILS
+INCLUDE_FPT_WITH_DETAILS
+EXCLUDE_FPT_AND_INCLUDE_WITH_DETAILS
+EXCLUDE_FPT_WITHOUT_DETAILS
+FPT_DISABLED
+}
+
+type GroupedProduct implements ProductInterface & PhysicalProductInterface {
+activity: String
+attribute_set_id: Int
+canonical_url: String
+categories: [CategoryInterface]
+category_gear: String
+climate: String
+collar: String
+color: Int
+country_of_manufacture: String
+created_at: String
+crosssell_products: [ProductInterface]
+description: ComplexTextValue
+eco_collection: Int
+erin_recommends: Int
+features_bags: String
+format: Int
+gender: String
+gift_message_available: String
+id: Int
+image: ProductImage
+items: [GroupedProductItem]
+manufacturer: Int
+material: String
+media_gallery: [MediaGalleryInterface]
+media_gallery_entries: [MediaGalleryEntry]
+@deprecated(reason: "Use product's `media_gallery` instead")
+meta_description: String
+meta_keyword: String
+meta_title: String
+name: String
+new: Int
+new_from_date: String
+new_to_date: String
+only_x_left_in_stock: Float
+options_container: String
+pattern: String
+performance_fabric: Int
+price: ProductPrices
+@deprecated(reason: "Use price_range for product price information.")
+price_range: PriceRange!
+price_tiers: [TierPrice]
+product_links: [ProductLinksInterface]
+related_products: [ProductInterface]
+sale: Int
+short_description: ComplexTextValue
+size: Int
+sku: String
+sleeve: String
+small_image: ProductImage
+special_from_date: String
+special_price: Float
+special_to_date: String
+stock_status: ProductStockStatus
+strap_bags: String
+style_bags: String
+style_bottom: String
+style_general: String
+swatch_image: String
+thumbnail: ProductImage
+tier_price: Float
+@deprecated(reason: "Use price_tiers for product tier price information.")
+tier_prices: [ProductTierPrices]
+@deprecated(reason: "Use price_tiers for product tier price information.")
+type_id: String @deprecated(reason: "Use __typename instead.")
+updated_at: String
+upsell_products: [ProductInterface]
+url_key: String
+url_path: String
+@deprecated(reason: "Use product's `canonical_url` or url rewrites instead")
+url_rewrites: [UrlRewrite]
+url_suffix: String
+websites: [Website]
+@deprecated(reason: "The field should not be used on the storefront.")
+weight: Float
+}
+
+type GroupedProductItem {
+position: Int
+product: ProductInterface
+qty: Float
+}
+
+input HostedProInput {
+cancel_url: String!
+return_url: String!
+}
+
+type HostedProUrl {
+secure_form_url: String
+}
+
+input HostedProUrlInput {
+cart_id: String!
+}
+
+type HttpQueryParameter {
+name: String
+value: String
+}
+
+type IsEmailAvailableOutput {
+is_email_available: Boolean
+}
+
+type LayerFilter {
+filter_items: [LayerFilterItemInterface]
+@deprecated(reason: "Use Aggregation.options instead.")
+filter_items_count: Int @deprecated(reason: "Use Aggregation.count instead.")
+name: String @deprecated(reason: "Use Aggregation.label instead.")
+request_var: String
+@deprecated(reason: "Use Aggregation.attribute_code instead.")
+}
+
+type LayerFilterItem implements LayerFilterItemInterface {
+items_count: Int @deprecated(reason: "Use AggregationOption.count instead.")
+label: String @deprecated(reason: "Use AggregationOption.label instead.")
+value_string: String
+@deprecated(reason: "Use AggregationOption.value instead.")
+}
+
+interface LayerFilterItemInterface {
+items_count: Int @deprecated(reason: "Use AggregationOption.count instead.")
+label: String @deprecated(reason: "Use AggregationOption.label instead.")
+value_string: String
+@deprecated(reason: "Use AggregationOption.value instead.")
+}
+
+type MediaGalleryEntry {
+content: ProductMediaGalleryEntriesContent
+disabled: Boolean
+file: String
+id: Int
+label: String
+media_type: String
+position: Int
+types: [String]
+video_content: ProductMediaGalleryEntriesVideoContent
+}
+
+interface MediaGalleryInterface {
+label: String
+url: String
+disabled: Boolean
+position: Int
+}
+
+type Money {
+currency: CurrencyEnum
+value: Float
+}
+
+type Mutation {
+addBundleProductsToCart(
+input: AddBundleProductsToCartInput
+): AddBundleProductsToCartOutput
+addConfigurableProductsToCart(
+input: AddConfigurableProductsToCartInput
+): AddConfigurableProductsToCartOutput
+addDownloadableProductsToCart(
+input: AddDownloadableProductsToCartInput
+): AddDownloadableProductsToCartOutput
+addSimpleProductsToCart(
+input: AddSimpleProductsToCartInput
+): AddSimpleProductsToCartOutput
+addVirtualProductsToCart(
+input: AddVirtualProductsToCartInput
+): AddVirtualProductsToCartOutput
+applyCouponToCart(input: ApplyCouponToCartInput): ApplyCouponToCartOutput
+changeCustomerPassword(
+currentPassword: String!
+newPassword: String!
+): Customer
+createBraintreeClientToken: String!
+createCustomer(input: CustomerInput!): CustomerOutput
+createCustomerAddress(input: CustomerAddressInput!): CustomerAddress
+createEmptyCart(input: createEmptyCartInput): String
+createPayflowProToken(
+input: PayflowProTokenInput!
+): CreatePayflowProTokenOutput
+createPaypalExpressToken(
+input: PaypalExpressTokenInput!
+): PaypalExpressTokenOutput
+deleteCustomerAddress(id: Int!): Boolean
+deletePaymentToken(public_hash: String!): DeletePaymentTokenOutput
+generateCustomerToken(email: String!, password: String!): CustomerToken
+handlePayflowProResponse(
+input: PayflowProResponseInput!
+): PayflowProResponseOutput
+mergeCarts(source_cart_id: String!, destination_cart_id: String!): Cart!
+placeOrder(input: PlaceOrderInput): PlaceOrderOutput
+removeCouponFromCart(
+input: RemoveCouponFromCartInput
+): RemoveCouponFromCartOutput
+removeItemFromCart(input: RemoveItemFromCartInput): RemoveItemFromCartOutput
+revokeCustomerToken: RevokeCustomerTokenOutput
+sendEmailToFriend(input: SendEmailToFriendInput): SendEmailToFriendOutput
+setBillingAddressOnCart(
+input: SetBillingAddressOnCartInput
+): SetBillingAddressOnCartOutput
+setGuestEmailOnCart(
+input: SetGuestEmailOnCartInput
+): SetGuestEmailOnCartOutput
+setPaymentMethodAndPlaceOrder(
+input: SetPaymentMethodAndPlaceOrderInput
+): PlaceOrderOutput
+@deprecated(
+reason: "Should use setPaymentMethodOnCart and placeOrder mutations in single request."
+)
+setPaymentMethodOnCart(
+input: SetPaymentMethodOnCartInput
+): SetPaymentMethodOnCartOutput
+setShippingAddressesOnCart(
+input: SetShippingAddressesOnCartInput
+): SetShippingAddressesOnCartOutput
+setShippingMethodsOnCart(
+input: SetShippingMethodsOnCartInput
+): SetShippingMethodsOnCartOutput
+updateCartItems(input: UpdateCartItemsInput): UpdateCartItemsOutput
+updateCustomer(input: CustomerInput!): CustomerOutput
+updateCustomerAddress(id: Int!, input: CustomerAddressInput): CustomerAddress
+}
+
+type Order {
+order_id: String
+@deprecated(
+reason: "The order_id field is deprecated, use order_number instead."
+)
+order_number: String!
+}
+
+input PayflowExpressInput {
+payer_id: String!
+token: String!
+}
+
+input PayflowLinkInput {
+cancel_url: String!
+error_url: String!
+return_url: String!
+}
+
+enum PayflowLinkMode {
+TEST
+LIVE
+}
+
+type PayflowLinkToken {
+mode: PayflowLinkMode
+paypal_url: String
+secure_token: String
+secure_token_id: String
+}
+
+input PayflowLinkTokenInput {
+cart_id: String!
+}
+
+input PayflowProInput {
+cc_details: CreditCardDetailsInput!
+}
+
+input PayflowProResponseInput {
+cart_id: String!
+paypal_payload: String!
+}
+
+type PayflowProResponseOutput {
+cart: Cart!
+}
+
+type PayflowProToken {
+response_message: String!
+result: Int!
+result_code: Int!
+secure_token: String!
+secure_token_id: String!
+}
+
+input PayflowProTokenInput {
+cart_id: String!
+urls: PayflowProUrlInput!
+}
+
+input PayflowProUrlInput {
+cancel_url: String!
+error_url: String!
+return_url: String!
+}
+
+input PaymentMethodInput {
+authorizenet_acceptjs: AuthorizenetInput
+braintree: BraintreeInput
+braintree_cc_vault: BraintreeCcVaultInput
+code: String!
+hosted_pro: HostedProInput
+payflow_express: PayflowExpressInput
+payflow_link: PayflowLinkInput
+payflowpro: PayflowProInput
+paypal_express: PaypalExpressInput
+purchase_order_number: String
+}
+
+type PaymentToken {
+details: String
+payment_method_code: String!
+public_hash: String!
+type: PaymentTokenTypeEnum!
+}
+
+enum PaymentTokenTypeEnum {
+card
+account
+}
+
+input PaypalExpressInput {
+payer_id: String!
+token: String!
+}
+
+type PaypalExpressToken {
+paypal_urls: PaypalExpressUrlList
+@deprecated(
+reason: "Use field `paypal_urls` of type `PaypalExpressTokenOutput` instead"
+)
+token: String
+@deprecated(
+reason: "Use field `token` of type `PaypalExpressTokenOutput` instead"
+)
+}
+
+input PaypalExpressTokenInput {
+cart_id: String!
+code: String!
+express_button: Boolean
+urls: PaypalExpressUrlsInput!
+use_paypal_credit: Boolean
+}
+
+type PaypalExpressTokenOutput {
+paypal_urls: PaypalExpressUrlList
+token: String
+}
+
+type PaypalExpressUrlList {
+edit: String
+start: String
+}
+
+input PaypalExpressUrlsInput {
+cancel_url: String!
+pending_url: String
+return_url: String!
+success_url: String
+}
+
+interface PhysicalProductInterface {
+weight: Float
+}
+
+input PlaceOrderInput {
+cart_id: String!
+}
+
+type PlaceOrderOutput {
+order: Order!
+}
+
+type Price {
+adjustments: [PriceAdjustment]
+@deprecated(reason: "Price is deprecated, use ProductPrice.")
+amount: Money @deprecated(reason: "Price is deprecated, use ProductPrice.")
+}
+
+type PriceAdjustment {
+amount: Money
+code: PriceAdjustmentCodesEnum
+@deprecated(reason: "PriceAdjustment is deprecated.")
+description: PriceAdjustmentDescriptionEnum
+@deprecated(reason: "PriceAdjustment is deprecated.")
+}
+
+enum PriceAdjustmentCodesEnum {
+TAX
+@deprecated(
+reason: "PriceAdjustmentCodesEnum is deprecated. Tax is included or excluded in price. Tax is not shown separtely in Catalog"
+)
+WEEE
+@deprecated(
+reason: "WEEE code is deprecated, use fixed_product_taxes.label"
+)
+WEEE_TAX
+@deprecated(
+reason: "Use fixed_product_taxes. PriceAdjustmentCodesEnum is deprecated. Tax is included or excluded in price. Tax is not shown separtely in Catalog"
+)
+}
+
+enum PriceAdjustmentDescriptionEnum {
+INCLUDED
+EXCLUDED
+}
+
+type PriceRange {
+maximum_price: ProductPrice
+minimum_price: ProductPrice!
+}
+
+enum PriceTypeEnum {
+FIXED
+PERCENT
+DYNAMIC
+}
+
+enum PriceViewEnum {
+PRICE_RANGE
+AS_LOW_AS
+}
+
+input ProductAttributeFilterInput {
+category_id: FilterEqualTypeInput
+description: FilterMatchTypeInput
+name: FilterMatchTypeInput
+price: FilterRangeTypeInput
+short_description: FilterMatchTypeInput
+sku: FilterEqualTypeInput
+url_key: FilterEqualTypeInput
+}
+
+input ProductAttributeSortInput {
+name: SortEnum
+position: SortEnum
+price: SortEnum
+relevance: SortEnum
+}
+
+type ProductDiscount {
+amount_off: Float
+percent_off: Float
+}
+
+input ProductFilterInput {
+category_id: FilterTypeInput
+country_of_manufacture: FilterTypeInput
+created_at: FilterTypeInput
+custom_layout: FilterTypeInput
+custom_layout_update: FilterTypeInput
+description: FilterTypeInput
+gift_message_available: FilterTypeInput
+has_options: FilterTypeInput
+image: FilterTypeInput
+image_label: FilterTypeInput
+manufacturer: FilterTypeInput
+max_price: FilterTypeInput
+meta_description: FilterTypeInput
+meta_keyword: FilterTypeInput
+meta_title: FilterTypeInput
+min_price: FilterTypeInput
+name: FilterTypeInput
+news_from_date: FilterTypeInput
+news_to_date: FilterTypeInput
+options_container: FilterTypeInput
+or: ProductFilterInput
+price: FilterTypeInput
+required_options: FilterTypeInput
+short_description: FilterTypeInput
+sku: FilterTypeInput
+small_image: FilterTypeInput
+small_image_label: FilterTypeInput
+special_from_date: FilterTypeInput
+special_price: FilterTypeInput
+special_to_date: FilterTypeInput
+swatch_image: FilterTypeInput
+thumbnail: FilterTypeInput
+thumbnail_label: FilterTypeInput
+tier_price: FilterTypeInput
+updated_at: FilterTypeInput
+url_key: FilterTypeInput
+url_path: FilterTypeInput
+weight: FilterTypeInput
+}
+
+type ProductImage implements MediaGalleryInterface {
+label: String
+url: String
+disabled: Boolean
+position: Int
+}
+
+interface ProductInterface {
+activity: String
+attribute_set_id: Int
+canonical_url: String
+categories: [CategoryInterface]
+category_gear: String
+climate: String
+collar: String
+color: Int
+country_of_manufacture: String
+created_at: String
+crosssell_products: [ProductInterface]
+description: ComplexTextValue
+eco_collection: Int
+erin_recommends: Int
+features_bags: String
+format: Int
+gender: String
+gift_message_available: String
+id: Int
+image: ProductImage
+manufacturer: Int
+material: String
+media_gallery: [MediaGalleryInterface]
+media_gallery_entries: [MediaGalleryEntry]
+@deprecated(reason: "Use product's `media_gallery` instead")
+meta_description: String
+meta_keyword: String
+meta_title: String
+name: String
+new: Int
+new_from_date: String
+new_to_date: String
+only_x_left_in_stock: Float
+options_container: String
+pattern: String
+performance_fabric: Int
+price: ProductPrices
+@deprecated(reason: "Use price_range for product price information.")
+price_range: PriceRange!
+price_tiers: [TierPrice]
+product_links: [ProductLinksInterface]
+related_products: [ProductInterface]
+sale: Int
+short_description: ComplexTextValue
+size: Int
+sku: String
+sleeve: String
+small_image: ProductImage
+special_from_date: String
+special_price: Float
+special_to_date: String
+stock_status: ProductStockStatus
+strap_bags: String
+style_bags: String
+style_bottom: String
+style_general: String
+swatch_image: String
+thumbnail: ProductImage
+tier_price: Float
+@deprecated(reason: "Use price_tiers for product tier price information.")
+tier_prices: [ProductTierPrices]
+@deprecated(reason: "Use price_tiers for product tier price information.")
+type_id: String @deprecated(reason: "Use __typename instead.")
+updated_at: String
+upsell_products: [ProductInterface]
+url_key: String
+url_path: String
+@deprecated(reason: "Use product's `canonical_url` or url rewrites instead")
+url_rewrites: [UrlRewrite]
+url_suffix: String
+websites: [Website]
+@deprecated(reason: "The field should not be used on the storefront.")
+}
+
+type ProductLinks implements ProductLinksInterface {
+link_type: String
+linked_product_sku: String
+linked_product_type: String
+position: Int
+sku: String
+}
+
+interface ProductLinksInterface {
+link_type: String
+linked_product_sku: String
+linked_product_type: String
+position: Int
+sku: String
+}
+
+type ProductMediaGalleryEntriesContent {
+base64_encoded_data: String
+name: String
+type: String
+}
+
+type ProductMediaGalleryEntriesVideoContent {
+media_type: String
+video_description: String
+video_metadata: String
+video_provider: String
+video_title: String
+video_url: String
+}
+
+type ProductPrice {
+discount: ProductDiscount
+final_price: Money!
+fixed_product_taxes: [FixedProductTax]
+regular_price: Money!
+}
+
+type ProductPrices {
+maximalPrice: Price @deprecated(reason: "Use PriceRange.maximum_price.")
+minimalPrice: Price @deprecated(reason: "Use PriceRange.minimum_price.")
+regularPrice: Price
+@deprecated(
+reason: "Use regular_price from PriceRange.minimum_price or PriceRange.maximum_price."
+)
+}
+
+type Products {
+aggregations: [Aggregation]
+filters: [LayerFilter] @deprecated(reason: "Use aggregations instead")
+items: [ProductInterface]
+page_info: SearchResultPageInfo
+sort_fields: SortFields
+total_count: Int
+}
+
+input ProductSortInput {
+country_of_manufacture: SortEnum
+created_at: SortEnum
+custom_layout: SortEnum
+custom_layout_update: SortEnum
+description: SortEnum
+gift_message_available: SortEnum
+has_options: SortEnum
+image: SortEnum
+image_label: SortEnum
+manufacturer: SortEnum
+meta_description: SortEnum
+meta_keyword: SortEnum
+meta_title: SortEnum
+name: SortEnum
+news_from_date: SortEnum
+news_to_date: SortEnum
+options_container: SortEnum
+price: SortEnum
+required_options: SortEnum
+short_description: SortEnum
+sku: SortEnum
+small_image: SortEnum
+small_image_label: SortEnum
+special_from_date: SortEnum
+special_price: SortEnum
+special_to_date: SortEnum
+swatch_image: SortEnum
+thumbnail: SortEnum
+thumbnail_label: SortEnum
+tier_price: SortEnum
+updated_at: SortEnum
+url_key: SortEnum
+url_path: SortEnum
+weight: SortEnum
+}
+
+enum ProductStockStatus {
+IN_STOCK
+OUT_OF_STOCK
+}
+
+type ProductTierPrices {
+customer_group_id: String
+@deprecated(reason: "customer_group_id is not relevant for storefront.")
+percentage_value: Float
+@deprecated(
+reason: "ProductTierPrices is deprecated. Use TierPrice.discount."
+)
+qty: Float
+@deprecated(
+reason: "ProductTierPrices is deprecated, use TierPrice.quantity."
+)
+value: Float
+@deprecated(
+reason: "ProductTierPrices is deprecated. Use TierPrice.final_price"
+)
+website_id: Float
+@deprecated(reason: "website_id is not relevant for storefront.")
+}
+
+type ProductVideo implements MediaGalleryInterface {
+label: String
+url: String
+disabled: Boolean
+position: Int
+video_content: ProductMediaGalleryEntriesVideoContent
+}
+
+type Query {
+cart(cart_id: String!): Cart
+category(id: Int): CategoryTree
+@deprecated(reason: "Use 'categoryList' query instead of 'category' query")
+categoryList(filters: CategoryFilterInput): [CategoryTree]
+checkoutAgreements: [CheckoutAgreement]
+cmsBlocks(identifiers: [String]): CmsBlocks
+cmsPage(
+id: Int
+identifier: String
+): CmsPage
+countries: [Country]
+country(id: String): Country
+currency: Currency
+customAttributeMetadata(
+attributes: [AttributeInput!]!
+): CustomAttributeMetadata
+customer: Customer
+customerCart: Cart!
+customerDownloadableProducts: CustomerDownloadableProducts
+customerOrders: CustomerOrders
+customerPaymentTokens: CustomerPaymentTokens
+getHostedProUrl(input: HostedProUrlInput!): HostedProUrl
+getPayflowLinkToken(input: PayflowLinkTokenInput!): PayflowLinkToken
+isEmailAvailable(email: String!): IsEmailAvailableOutput
+products(
+search: String
+filter: ProductAttributeFilterInput
+pageSize: Int = 20
+currentPage: Int = 1
+sort: ProductAttributeSortInput
+): Products
+storeConfig: StoreConfig
+urlResolver(url: String!): EntityUrl
+wishlist: WishlistOutput
+@deprecated(reason: "Moved under `Customer` `wishlist`")
+}
+
+type Region {
+code: String
+id: Int
+name: String
+}
+
+input RemoveCouponFromCartInput {
+cart_id: String!
+}
+
+type RemoveCouponFromCartOutput {
+cart: Cart
+}
+
+input RemoveItemFromCartInput {
+cart_id: String!
+cart_item_id: Int!
+}
+
+type RemoveItemFromCartOutput {
+cart: Cart!
+}
+
+type RevokeCustomerTokenOutput {
+result: Boolean!
+}
+
+type SearchResultPageInfo {
+current_page: Int
+page_size: Int
+total_pages: Int
+}
+
+type SelectedBundleOption {
+id: Int!
+label: String!
+type: String!
+values: [SelectedBundleOptionValue]!
+}
+
+type SelectedBundleOptionValue {
+id: Int!
+label: String!
+price: Float!
+quantity: Float!
+}
+
+type SelectedConfigurableOption {
+id: Int!
+option_label: String!
+value_id: Int!
+value_label: String!
+}
+
+type SelectedCustomizableOption {
+id: Int!
+is_required: Boolean!
+label: String!
+sort_order: Int!
+values: [SelectedCustomizableOptionValue]!
+}
+
+type SelectedCustomizableOptionValue {
+id: Int!
+label: String!
+price: CartItemSelectedOptionValuePrice!
+value: String!
+}
+
+type SelectedPaymentMethod {
+code: String!
+purchase_order_number: String
+title: String!
+}
+
+type SelectedShippingMethod {
+amount: Money!
+base_amount: Money
+@deprecated(reason: "The field should not be used on the storefront")
+carrier_code: String!
+carrier_title: String!
+method_code: String!
+method_title: String!
+}
+
+input SendEmailToFriendInput {
+product_id: Int!
+recipients: [SendEmailToFriendRecipientInput]!
+sender: SendEmailToFriendSenderInput!
+}
+
+type SendEmailToFriendOutput {
+recipients: [SendEmailToFriendRecipient]
+sender: SendEmailToFriendSender
+}
+
+type SendEmailToFriendRecipient {
+email: String!
+name: String!
+}
+
+input SendEmailToFriendRecipientInput {
+email: String!
+name: String!
+}
+
+type SendEmailToFriendSender {
+email: String!
+message: String!
+name: String!
+}
+
+input SendEmailToFriendSenderInput {
+email: String!
+message: String!
+name: String!
+}
+
+input SetBillingAddressOnCartInput {
+billing_address: BillingAddressInput!
+cart_id: String!
+}
+
+type SetBillingAddressOnCartOutput {
+cart: Cart!
+}
+
+input SetGuestEmailOnCartInput {
+cart_id: String!
+email: String!
+}
+
+type SetGuestEmailOnCartOutput {
+cart: Cart!
+}
+
+input SetPaymentMethodAndPlaceOrderInput {
+cart_id: String!
+payment_method: PaymentMethodInput!
+}
+
+input SetPaymentMethodOnCartInput {
+cart_id: String!
+payment_method: PaymentMethodInput!
+}
+
+type SetPaymentMethodOnCartOutput {
+cart: Cart!
+}
+
+input SetShippingAddressesOnCartInput {
+cart_id: String!
+shipping_addresses: [ShippingAddressInput]!
+}
+
+type SetShippingAddressesOnCartOutput {
+cart: Cart!
+}
+
+input SetShippingMethodsOnCartInput {
+cart_id: String!
+shipping_methods: [ShippingMethodInput]!
+}
+
+type SetShippingMethodsOnCartOutput {
+cart: Cart!
+}
+
+enum ShipBundleItemsEnum {
+TOGETHER
+SEPARATELY
+}
+
+input ShippingAddressInput {
+address: CartAddressInput
+customer_address_id: Int
+customer_notes: String
+}
+
+type ShippingCartAddress implements CartAddressInterface {
+available_shipping_methods: [AvailableShippingMethod]
+cart_items: [CartItemQuantity]
+@deprecated(reason: "`cart_items_v2` should be used instead")
+cart_items_v2: [CartItemInterface]
+city: String!
+company: String
+country: CartAddressCountry!
+customer_notes: String
+firstname: String!
+items_weight: Float
+@deprecated(reason: "This information shoud not be exposed on frontend")
+lastname: String!
+postcode: String
+region: CartAddressRegion
+selected_shipping_method: SelectedShippingMethod
+street: [String]!
+telephone: String!
+}
+
+input ShippingMethodInput {
+carrier_code: String!
+method_code: String!
+}
+
+type SimpleCartItem implements CartItemInterface {
+customizable_options: [SelectedCustomizableOption]
+id: String!
+prices: CartItemPrices
+product: ProductInterface!
+quantity: Float!
+}
+
+type SimpleProduct implements ProductInterface & PhysicalProductInterface & CustomizableProductInterface {
+activity: String
+attribute_set_id: Int
+canonical_url: String
+categories: [CategoryInterface]
+category_gear: String
+climate: String
+collar: String
+color: Int
+country_of_manufacture: String
+created_at: String
+crosssell_products: [ProductInterface]
+description: ComplexTextValue
+eco_collection: Int
+erin_recommends: Int
+features_bags: String
+format: Int
+gender: String
+gift_message_available: String
+id: Int
+image: ProductImage
+manufacturer: Int
+material: String
+media_gallery: [MediaGalleryInterface]
+media_gallery_entries: [MediaGalleryEntry]
+@deprecated(reason: "Use product's `media_gallery` instead")
+meta_description: String
+meta_keyword: String
+meta_title: String
+name: String
+new: Int
+new_from_date: String
+new_to_date: String
+only_x_left_in_stock: Float
+options: [CustomizableOptionInterface]
+options_container: String
+pattern: String
+performance_fabric: Int
+price: ProductPrices
+@deprecated(reason: "Use price_range for product price information.")
+price_range: PriceRange!
+price_tiers: [TierPrice]
+product_links: [ProductLinksInterface]
+related_products: [ProductInterface]
+sale: Int
+short_description: ComplexTextValue
+size: Int
+sku: String
+sleeve: String
+small_image: ProductImage
+special_from_date: String
+special_price: Float
+special_to_date: String
+stock_status: ProductStockStatus
+strap_bags: String
+style_bags: String
+style_bottom: String
+style_general: String
+swatch_image: String
+thumbnail: ProductImage
+tier_price: Float
+@deprecated(reason: "Use price_tiers for product tier price information.")
+tier_prices: [ProductTierPrices]
+@deprecated(reason: "Use price_tiers for product tier price information.")
+type_id: String @deprecated(reason: "Use __typename instead.")
+updated_at: String
+upsell_products: [ProductInterface]
+url_key: String
+url_path: String
+@deprecated(reason: "Use product's `canonical_url` or url rewrites instead")
+url_rewrites: [UrlRewrite]
+url_suffix: String
+websites: [Website]
+@deprecated(reason: "The field should not be used on the storefront.")
+weight: Float
+}
+
+input SimpleProductCartItemInput {
+customizable_options: [CustomizableOptionInput]
+data: CartItemInput!
+}
+
+enum SortEnum {
+ASC
+DESC
+}
+
+type SortField {
+label: String
+value: String
+}
+
+type SortFields {
+default: String
+options: [SortField]
+}
+
+type StoreConfig {
+absolute_footer: String
+base_currency_code: String
+base_link_url: String
+base_media_url: String
+base_static_url: String
+base_url: String
+catalog_default_sort_by: String
+category_fixed_product_tax_display_setting: FixedProductTaxDisplaySettings
+category_url_suffix: String
+cms_home_page: String
+cms_no_cookies: String
+cms_no_route: String
+code: String
+copyright: String
+default_description: String
+default_display_currency_code: String
+default_keywords: String
+default_title: String
+demonotice: Int
+front: String
+grid_per_page: Int
+grid_per_page_values: String
+head_includes: String
+head_shortcut_icon: String
+header_logo_src: String
+id: Int
+list_mode: String
+list_per_page: Int
+list_per_page_values: String
+locale: String
+logo_alt: String
+logo_height: Int
+logo_width: Int
+no_route: String
+product_fixed_product_tax_display_setting: FixedProductTaxDisplaySettings
+product_url_suffix: String
+root_category_id: Int
+sales_fixed_product_tax_display_setting: FixedProductTaxDisplaySettings
+secure_base_link_url: String
+secure_base_media_url: String
+secure_base_static_url: String
+secure_base_url: String
+show_cms_breadcrumbs: Int
+store_name: String
+timezone: String
+title_prefix: String
+title_separator: String
+title_suffix: String
+website_id: Int
+weight_unit: String
+welcome: String
+}
+
+type SwatchData {
+type: String
+value: String
+}
+
+type SwatchLayerFilterItem implements LayerFilterItemInterface & SwatchLayerFilterItemInterface {
+items_count: Int @deprecated(reason: "Use AggregationOption.count instead.")
+label: String @deprecated(reason: "Use AggregationOption.label instead.")
+swatch_data: SwatchData
+value_string: String
+@deprecated(reason: "Use AggregationOption.value instead.")
+}
+
+interface SwatchLayerFilterItemInterface {
+swatch_data: SwatchData
+}
+
+type TierPrice {
+discount: ProductDiscount
+final_price: Money
+quantity: Float
+}
+
+input UpdateCartItemsInput {
+cart_id: String!
+cart_items: [CartItemUpdateInput]!
+}
+
+type UpdateCartItemsOutput {
+cart: Cart!
+}
+
+type UrlRewrite {
+parameters: [HttpQueryParameter]
+url: String
+}
+
+enum UrlRewriteEntityTypeEnum {
+CMS_PAGE
+PRODUCT
+CATEGORY
+}
+
+type VirtualCartItem implements CartItemInterface {
+customizable_options: [SelectedCustomizableOption]
+id: String!
+prices: CartItemPrices
+product: ProductInterface!
+quantity: Float!
+}
+
+type VirtualProduct implements ProductInterface & CustomizableProductInterface {
+activity: String
+attribute_set_id: Int
+canonical_url: String
+categories: [CategoryInterface]
+category_gear: String
+climate: String
+collar: String
+color: Int
+country_of_manufacture: String
+created_at: String
+crosssell_products: [ProductInterface]
+description: ComplexTextValue
+eco_collection: Int
+erin_recommends: Int
+features_bags: String
+format: Int
+gender: String
+gift_message_available: String
+id: Int
+image: ProductImage
+manufacturer: Int
+material: String
+media_gallery: [MediaGalleryInterface]
+media_gallery_entries: [MediaGalleryEntry]
+@deprecated(reason: "Use product's `media_gallery` instead")
+meta_description: String
+meta_keyword: String
+meta_title: String
+name: String
+new: Int
+new_from_date: String
+new_to_date: String
+only_x_left_in_stock: Float
+options: [CustomizableOptionInterface]
+options_container: String
+pattern: String
+performance_fabric: Int
+price: ProductPrices
+@deprecated(reason: "Use price_range for product price information.")
+price_range: PriceRange!
+price_tiers: [TierPrice]
+product_links: [ProductLinksInterface]
+related_products: [ProductInterface]
+sale: Int
+short_description: ComplexTextValue
+size: Int
+sku: String
+sleeve: String
+small_image: ProductImage
+special_from_date: String
+special_price: Float
+special_to_date: String
+stock_status: ProductStockStatus
+strap_bags: String
+style_bags: String
+style_bottom: String
+style_general: String
+swatch_image: String
+thumbnail: ProductImage
+tier_price: Float
+@deprecated(reason: "Use price_tiers for product tier price information.")
+tier_prices: [ProductTierPrices]
+@deprecated(reason: "Use price_tiers for product tier price information.")
+type_id: String @deprecated(reason: "Use __typename instead.")
+updated_at: String
+upsell_products: [ProductInterface]
+url_key: String
+url_path: String
+@deprecated(reason: "Use product's `canonical_url` or url rewrites instead")
+url_rewrites: [UrlRewrite]
+url_suffix: String
+websites: [Website]
+@deprecated(reason: "The field should not be used on the storefront.")
+}
+
+input VirtualProductCartItemInput {
+customizable_options: [CustomizableOptionInput]
+data: CartItemInput!
+}
+
+type Website {
+code: String
+@deprecated(reason: "The field should not be used on the storefront.")
+default_group_id: String
+@deprecated(reason: "The field should not be used on the storefront.")
+id: Int @deprecated(reason: "The field should not be used on the storefront.")
+is_default: Boolean
+@deprecated(reason: "The field should not be used on the storefront.")
+name: String
+@deprecated(reason: "The field should not be used on the storefront.")
+sort_order: Int
+@deprecated(reason: "The field should not be used on the storefront.")
+}
+
+type Wishlist {
+id: ID
+items: [WishlistItem]
+items_count: Int
+sharing_code: String
+updated_at: String
+}
+
+type WishlistItem {
+added_at: String
+description: String
+id: Int
+product: ProductInterface
+qty: Float
+}
+
+type WishlistOutput {
+items: [WishlistItem]
+@deprecated(reason: "Use field `items` from type `Wishlist` instead")
+items_count: Int
+@deprecated(reason: "Use field `items_count` from type `Wishlist` instead")
+name: String
+@deprecated(
+reason: "This field is related to Commerce functionality and is always `null` in Open Source edition"
+)
+sharing_code: String
+@deprecated(reason: "Use field `sharing_code` from type `Wishlist` instead")
+updated_at: String
+@deprecated(reason: "Use field `updated_at` from type `Wishlist` instead")
+}
+
